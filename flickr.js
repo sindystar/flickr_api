@@ -15,9 +15,9 @@ const url = `${base}method=${method}&api_key=${key}&per_page=${per_page}&format=
 fetch(url)
   .then((data) => {
 
-    console.log(data);//가져온 데이터 전체를 보여줌
+    // console.log(data);//가져온 데이터 전체를 보여줌
     let result = data.json(); //가져온 데이터중에 json형태의 값으로 변환함
-    console.log(result); //결과물로 만들어진 데이터를 보여준다 
+    // console.log(result); //결과물로 만들어진 데이터를 보여준다 
     return result; //해당 결과를 리턴(반환)해줘야 쓸수있다
   })
   .then((json) => {
@@ -48,4 +48,32 @@ fetch(url)
     })
 
     frame.innerHTML = htmls;
+
+
+    const imgs = frame.querySelectorAll("img");
+    const len = imgs.length;
+
+    let count = 0;
+
+    for (let el of imgs) {
+      el.addEventListener("load", () => {
+        count++;
+
+        if (count == len) isoLayout();
+      })
+    }
   })
+
+
+  //isotope layout 플러그인을 적용시킬 함수 제작 
+  function isoLayout()  {
+
+
+    frame.classList.add("on");
+
+    new Isotope("#list", {
+      itemSelection: ".item",
+      coulumnWidth: ".item",
+      transitionDuration:"0.5s"
+    });
+  }
